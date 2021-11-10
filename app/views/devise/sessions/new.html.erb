@@ -1,0 +1,43 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag 'signup' %>
+<% end %>
+<div class="main-w3layouts wrapper">
+		<h1>SignIn Form</h1>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+
+<%= form_for(@user, url: user_session_path) do |f| %>
+	<%= f.email_field :email, autofocus: true, :class => 'input', :placeholder => 'Email' %><br/>
+	<%= f.password_field :password, autocomplete: "new-password", :class => 'input', :placeholder => 'Password' %><br/>
+  <% if devise_mapping.rememberable? %>
+  <div class="wthree-text">
+		<label class="anim">
+			<%= f.check_box :remember_me, :class => 'checkbox' %>
+			<span>Remember Me</span>
+		</label>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+<% end %>
+<!-- copyright -->
+		<div class="colorlibcopy-agile">
+			<p>© 2018 Colorlib Signup Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p>
+		</div>
+		<!-- //copyright -->
+		<ul class="colorlib-bubbles">
+			<li>t</li>
+			<li>w</li>
+			<li>i</li>
+			<li>t</li>
+			<li>e</li>
+			<li>r</li>
+			<li>t</li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+<p><%= link_to "Sign Up!", new_user_registration_path %></p>
+<p><%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, method: :post %></p>

@@ -1,0 +1,32 @@
+<div class="project-boxes jsGridView">
+    <% @posts.each do |post| %>
+    <!--ここから下がqiitaでは部分テンプレート化されている-->
+        <div class="project-box-wrapper post-action-<%= post.id %>">
+            <div class="project-box">
+                <div class="project-box-header">
+                    <div class="project-box-header-introduction">
+                        <%= link_to attachment_image_tag(post.user, :profile_image, format: 'jpeg', size: "50x50", fallback: "no_image.jpg", size:'100x100'), user_path(post.user.id) %>
+                        <%= link_to_if post.user, post.user.name, user_path(post.user.id) %>
+                    </div>
+                    <!--Editはlink_toではなく、spanタグにしてjsファイルに処理を書く-->
+                    <div class="post-action-#{ post.id }">
+                        <%= link_to(content_tag(:i, nil, class: 'fas fa-edit'), edit_post_path(post), remote: true) %>
+                        <!--<div id="user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>-->
+                        <%= link_to(content_tag(:i, nil, class: 'fas fa-trash-alt'), post_path(post), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }) %>
+                    </div>
+                </div>
+                <div class="project-box-content-header">
+                    <p class="box-content-header "><%=safe_join(post.body.split("\n"),tag(:br))%></p>
+                </div>
+                <div class="project-box-footer ">
+                    <div id="likes_buttons_<%= post.id %>">
+                        <%= render partial: 'posts/post', locals: {post: post} %>
+                    </div>
+                    <div class="days-left">
+                        <%= l post.created_at, format: :default %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

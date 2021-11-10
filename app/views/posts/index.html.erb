@@ -1,0 +1,133 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag 'nav' %>
+    <%= stylesheet_link_tag 'main_layouts' %>
+<% end %>
+<%= render "common/sidebar" %>
+        <div class="app-content ">
+            <div class="projects-section ">
+                <div class="projects-section-header ">
+                    <p>Tweets</p>
+                    <p class="time "><%= Date.today %></p>
+                </div>
+                <div class="projects-section-line">
+                    <div class="projects-status ">
+                        <div class="item-status ">
+                            <span class="status-number "><%= @posts.count %></span>
+                            <span class="status-type ">Total Posts</span>
+                        </div>
+                        <div class="item-status ">
+                            <span class="status-number "><%= @users.count %></span>
+                            <span class="status-type ">Upcoming</span>
+                        </div>
+                    </div>
+                    <div class="view-actions">
+                            <button type="button" class="btn btn-primary w-10" data-toggle="modal" data-target="#exampleModal">
+                              New Post
+                            </button>
+                            
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">新規投稿</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <%= form_for @post, remote: true do |f| %>
+                                      <div class="modal-body">
+                                        <%= render 'layouts/error_messages', model: @post %>
+                                        <div class="post">
+                                          <%= f.text_area :body, size: "40x5", :placeholder => 'いまどんな気持ち？' %>
+                                          <div class="image_wrapper">
+                                            <div class="item_image_btn">
+                                              <%= f.attachment_field :image, id: "file" %>
+                                            </div>
+                                            <div id="img_field" onClick="$('#file').click()" >
+                                              <p class="image-select">画像選択</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <%= f.submit "投稿する", class: "btn btn-primary" %>
+                                      </div>
+                                  <% end %>
+                                </div>
+                              </div>
+                            </div>
+                        <button class="view-btn list-view " title="List View ">
+                          <svg xmlns="http://www.w3.org/2000/svg " width="24 " height="24 " viewBox="0 0 24 24 " fill="none " stroke="currentColor " stroke-width="2 " stroke-linecap="round " stroke-linejoin="round " class="feather feather-list ">
+                            <line x1="8 " y1="6 " x2="21 " y2="6 " />
+                            <line x1="8 " y1="12 " x2="21 " y2="12 " />
+                            <line x1="8 " y1="18 " x2="21 " y2="18 " />
+                            <line x1="3 " y1="6 " x2="3.01 " y2="6 " />
+                            <line x1="3 " y1="12 " x2="3.01 " y2="12 " />
+                            <line x1="3 " y1="18 " x2="3.01 " y2="18 " />
+                        　</svg>
+                        </button>
+                        <button class="view-btn grid-view active " title="Grid View ">
+                          <svg xmlns="http://www.w3.org/2000/svg " width="20 " height="20 " viewBox="0 0 24 24 " fill="none " stroke="currentColor " stroke-width="2 " stroke-linecap="round " stroke-linejoin="round " class="feather feather-grid ">
+                            <rect x="3 " y="3 " width="7 " height="7 " />
+                            <rect x="14 " y="3 " width="7 " height="7 " />
+                            <rect x="14 " y="14 " width="7 " height="7 " />
+                            <rect x="3 " y="14 " width="7 " height="7 " />
+                        　</svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="newposts">
+                    <%= render partial: 'posts/index', locals: { posts: @posts } %>
+                </div>
+                
+            </div>
+            <!--フォロー、フォロワー欄（幅をコンパクトにしたい）-->
+            <div class="messages-section ">
+                <div class="follow-bar-right">
+                    <div class="projects-section-header ">
+                        <p>Following</p>
+                    </div>
+                    <% @following_users.each do |following_user| %>
+                    <div class="messages ">
+                        <div class="message-box">
+                            <%= link_to (user_path(following_user.id)) do %>
+                            <p><%= attachment_image_tag(following_user, :profile_image, format: 'jpeg', size: "50x50", fallback: "no_image.jpg", size:'100x100') %></p>
+                            <div class="message-content ">
+                                <div class="message-header ">
+                                    <div class="name "><%= following_user.name %></div>
+                                </div>
+                            <% end %>
+                                <p class="message-line ">
+                                    ##
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+                </div>
+                <div class="follow-bar-left">
+                    <div class="projects-section-header ">
+                        <p>Follower</p>
+                    </div>
+                    <% @follower_users.each do |follower_user| %>
+                        <div class="messages ">
+                            <div class="message-box ">
+                                <%= link_to (user_path(follower_user.id)) do %>
+                                <p><%= attachment_image_tag(follower_user, :profile_image, format: 'jpeg', size: "30x30", fallback: "no_image.jpg", size:'100x100') %></p>
+                                <div class="message-content ">
+                                    <div class="message-header ">
+                                        <div class="name "><%= follower_user.name %></div>
+                                    </div>
+                                <% end %>
+                                    <p class="message-line">
+                                        #
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <% end %>
+            </div>
+        </div>
+    </div>
+    <!--<script type="text/javascript" src="/tuitta-/app/assets/javascripts/main_layouts.js"></script>-->

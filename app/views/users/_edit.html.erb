@@ -1,0 +1,20 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <h3>プロフィールを編集</h3>
+    <%= form_with model: @user, method: :patch do |f| %>
+      <div class="field">
+      <%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: "100x100" %>
+      <%= f.attachment_field :profile_image, :placeholder => "プロフィール画像" %>
+      </div>
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true %>
+      </div>
+      <div class="field">
+        <%= f.label :自己紹介 %><br>
+        <%= f.text_area :introduction, autofocus: true %>
+      </div>
+      <%= f.submit "保存", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

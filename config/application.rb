@@ -6,7 +6,18 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Myapp
+module TimeFormatSandbox
+  class Application < Rails::Application
+    config.action_view.embed_authenticity_token_in_remote_forms = true
+    # ...
+
+    # タイムゾーンを日本時間に設定
+    config.time_zone = 'Asia/Tokyo'
+    config.i18n.default_locale = :ja
+  end
+end
+
+module Tuitta
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
@@ -16,4 +27,5 @@ module Myapp
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
   end
+  
 end

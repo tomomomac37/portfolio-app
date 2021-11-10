@@ -1,0 +1,53 @@
+<% content_for :css do %>
+    <%= stylesheet_link_tag 'signup' %>
+<% end %>
+
+	<div class="main-w3layouts wrapper">
+		<h1>Creative SignUp Form</h1>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+					<!--<input class="text" type="text" name="Username" placeholder="Username" required="">-->
+					<%= f.text_field :name, autofocus: true, :class => 'input', :placeholder => 'Username' %><br/>
+					<!--<input class="text email" type="email" name="email" placeholder="Email" required="">-->
+					<%= f.email_field :email, autofocus: true, :class => 'input', :placeholder => 'Email' %><br/>
+					<!--<input class="text" type="password" name="password" placeholder="Password" required="">-->
+					<!--ここの表示を自然にする-->
+					<% if @minimum_password_length %>
+            <!--<em>(<%#= @minimum_password_length %> characters minimum)</em>-->
+          <%= f.password_field :password, autocomplete: "new-password", :class => 'input', :placeholder => 'Password (6 characters minimum)' %><br/>
+          <% end %>
+					<!--<input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required="">-->
+					<%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'input', :placeholder => 'ConfirmPassword' %><br/>
+					<div class="wthree-text">
+						<label class="anim">
+							<input type="checkbox" class="checkbox" required="">
+							<span>I Agree To The Terms & Conditions</span>
+						</label>
+						<div class="clear"> </div>
+					</div>
+					<!--<input type="submit" value="SIGNUP">-->
+					<%= f.submit "Sign up", :class => 'input'  %>
+				<% end %>
+				<p>Don't have an Account? <%= link_to "Login Now!", new_user_session_path %></p>
+			</div>
+		</div>
+		<!-- copyright -->
+		<div class="colorlibcopy-agile">
+			<p>© 2018 Colorlib Signup Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p>
+		</div>
+		<!-- //copyright -->
+		<ul class="colorlib-bubbles">
+			<li>t</li>
+			<li>w</li>
+			<li>i</li>
+			<li>t</li>
+			<li>e</li>
+			<li>r</li>
+			<li>t</li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<!-- //main -->

@@ -1,0 +1,9 @@
+<!--$(".project-boxes jsGridView").html("<%#= j(render("index"), :locals => { posts: @posts}) %>");-->
+<!--$(".project-boxes jsGridView").html("<%#= j(render partial: 'index', :locals => { posts: @posts}) %>");-->
+<!--$(".project-boxes jsGridView").html("<%#= j(render 'index', :locals => { posts: @posts}) %>");-->
+
+<!--$("js-form").val('');-->
+
+$("textarea").val("");
+$("#exampleModal").modal("hide");
+$(".newposts").html("<%= escape_javascript(render 'index', posts: @posts) %>");
